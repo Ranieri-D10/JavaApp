@@ -7,6 +7,7 @@ package projeto0.pkg2;
 import Classes.Alimentos;
 import Classes.AlimentosDAO;
 import Classes.AvaliacaoFisica;
+import Classes.AvaliacaoFisicaDAO;
 import Classes.GUI;
 import Classes.Pessoa;
 import Classes.PessoaDAO;
@@ -24,15 +25,16 @@ public class Program {
     private static void foraDaMain() {
         Scanner sc = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        GUI gui = new GUI();
+
         PessoaDAO pessoaDAO = new PessoaDAO();
         Pessoa p1 = null;
 
         AlimentosDAO alimDAO = new AlimentosDAO();
         Alimentos alimento = null;
-        
-        GUI gui = new GUI();
 
         AvaliacaoFisica avFisica = null;
+        AvaliacaoFisicaDAO avFisDAO = new AvaliacaoFisicaDAO();
 
         int opc;
 
@@ -127,7 +129,7 @@ public class Program {
                                         int opcAlim = 0;
                                         do {
                                             limparTela();
-                                            
+
                                             opcAlim = gui.menuAlimentos();
                                             switch (opcAlim) {
                                                 case 1:
@@ -159,25 +161,62 @@ public class Program {
                                     case 5:
                                         limparTela();
                                         System.out.println("Opção: Avaliação Física");
-                                        System.out.println("Avaliação Física de " + usuarioLogado.getNome());
                                         limparTela();
-                                        System.out.print("Informe o peso(kg): ");
-                                        double peso = sc.nextDouble();
-                                        System.out.print("Informe a altura(cm): ");
-                                        double altura = sc.nextDouble();
-                                        System.out.print("Informe a idade: ");
-                                        int idade = sc.nextInt();
-                                        System.out.print("Informe a medida do pescoço(cm): ");
-                                        double pescoco = sc.nextDouble();
-                                        System.out.print("Informe a medida da cintura(cm): ");
-                                        double cintura = sc.nextDouble();
-                                        System.out.print("Informe a medida do quadril(cm): ");
-                                        double quadril = sc.nextDouble();
-                                        int idAf = 0;
-                                        limparTela();
-                                        avFisica = new AvaliacaoFisica(idAf, usuarioLogado, peso, altura, idade, pescoco, cintura, quadril, peso, LocalDate.now(), LocalDate.now());
+                                        int opcAvFis = 0;
+                                        do {
+                                            opcAvFis = gui.menuAvaliacaoFisica();
+                                            switch (opcAvFis) {
+                                                case 1:
+                                                    limparTela();
+                                                    System.out.println("1. Fazer Avaliação Física");
+                                                    System.out.println("Avaliação Física de " + usuarioLogado.getNome());
+                                                    limparTela();
+                                                    System.out.print("Informe o peso(kg): ");
+                                                    double peso = sc.nextDouble();
+                                                    System.out.print("Informe a altura(cm): ");
+                                                    double altura = sc.nextDouble();
+                                                    System.out.print("Informe a idade: ");
+                                                    int idade = sc.nextInt();
+                                                    System.out.print("Informe a medida do pescoço(cm): ");
+                                                    double pescoco = sc.nextDouble();
+                                                    System.out.print("Informe a medida da cintura(cm): ");
+                                                    double cintura = sc.nextDouble();
+                                                    System.out.print("Informe a medida do quadril(cm): ");
+                                                    double quadril = sc.nextDouble();
+                                                    System.out.println("Quantas vezes você faz exercícios por semana?");
+                                                    double vezesExercicios = sc.nextDouble();
+                                                    int idAf = 0;
+                                                    limparTela();
+                                                    avFisica = new AvaliacaoFisica(idAf, usuarioLogado, peso, altura, idade, pescoco, cintura, quadril, vezesExercicios, LocalDate.now(), LocalDate.now());
+                                                    boolean booAvFis = avFisDAO.criarAvaliacaoFisica(avFisica);
+                                                    
+                                                    avFisica.TaxaMetabolica(avFisica);
 
-                                        System.out.println(avFisica.toString());
+                                                    if (booAvFis) {
+                                                        System.out.println("Avaliação Física registrada com sucesso.");
+                                                        System.out.println(avFisica.toString());
+                                                        limparTela();
+                                                    } else {
+                                                        System.out.println("Não foi possível registar avaliação Física.");
+                                                        limparTela();
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    System.out.println("2. Excluir Avaliação Física");
+                                                    break;
+                                                case 3:
+                                                    System.out.println("3. Editar Avaliação Física");
+                                                    break;
+                                                case 4:
+                                                    opcAvFis = 4;
+                                                    break;
+                                                default:
+                                                    limparTela();
+                                                    System.out.println("Opção inválida. Tente novamente.");
+                                                    limparTela();
+                                                    break;
+                                            }
+                                        } while (opcAvFis != 4);
                                         break;
                                     case 6:
                                         System.out.println("Saindo do programa.");

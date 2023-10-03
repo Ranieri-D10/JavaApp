@@ -39,4 +39,14 @@ public class GUI {
         System.out.print("Escolha uma opção: ");
         return Integer.parseInt(sc.nextLine());
     }
+    
+    public int menuAvaliacaoFisica() {
+        System.out.println("Menu:");
+        System.out.println("1. Fazer Avaliação Física");
+        System.out.println("2. Excluir Avaliação Física");
+        System.out.println("3. Editar Avaliação Física");
+        System.out.println("4. Voltar ao menu anterior");
+        System.out.print("Escolha uma opção: ");
+        return Integer.parseInt(sc.nextLine());
+    }
 }

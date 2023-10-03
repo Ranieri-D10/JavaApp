@@ -18,13 +18,14 @@ public class AvaliacaoFisica {
     private double pescoco;
     private double cintura;
     private double quadril;
+    private double vezesExercicios;
     private double imc;
     private double tmb;
     private double bodyFat;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public AvaliacaoFisica(int id, Pessoa pessoa, double peso, double altura, int idade, double pescoco, double cintura, double quadril, double imc, LocalDate dataCriacao, LocalDate dataModificacao) {
+    public AvaliacaoFisica(int id, Pessoa pessoa, double peso, double altura, int idade, double pescoco, double cintura, double quadril, double vezesExercicios, LocalDate dataCriacao, LocalDate dataModificacao) {
         this.id = id;
         this.pessoa = pessoa;
         this.peso = peso;
@@ -33,6 +34,7 @@ public class AvaliacaoFisica {
         this.pescoco = pescoco;
         this.cintura = cintura;
         this.quadril = quadril;
+        this.vezesExercicios = vezesExercicios; // Defina o valor de vezesExercicios corretamente
         this.imc = imc;
         this.dataCriacao = dataCriacao;
         this.dataModificacao = dataModificacao;
@@ -126,48 +128,53 @@ public class AvaliacaoFisica {
         this.dataModificacao = dataModificacao;
     }
 
+    public double getVezesExercicios() {
+        return vezesExercicios;
+    }
+
+    public void setVezesExercicios(double vezesExercicios) {
+        this.vezesExercicios = vezesExercicios;
+    }
+
     @Override
     public String toString() {
-        return "Avaliação Física de " + pessoa.getNome() + " {"
+        return "Kcal/dia" + "Avaliação Física de " + pessoa.getNome() + " {"
                 + " \n id = " + id + ", peso = " + peso + ", altura = " + altura
                 + ", idade = " + idade + " \n pescoco = " + pescoco
                 + ", cintura = " + cintura + ", quadril = " + quadril
                 + "\n IMC = " + String.format("%.1f", imc())
-                + ", TMB = " + String.format("%.1f", TaxaMetabolica()) + "Kcal/dia"
+                + ", TMB = " + String.format("%.1f",TaxaMetabolica(this))
                 + ", Gordura corporal = " + String.format("%.1f", percentualGordura()) + "%"
-                + "\n Massa gorda = " + String.format("%.1f", massaGorda()) + " kg" + ", Massa massa = " + String.format("%.1f", massaMagra())+ " kg"
+                + "\n Massa gorda = " + String.format("%.1f", massaGorda()) + " kg" + ", Massa massa = " + String.format("%.1f", massaMagra()) + " kg"
                 + "\n dataCriacao = " + dataCriacao
                 + ", dataModificao = " + dataModificacao + " }";
     }
 
     public double imc() {
-        double alturaMetros = altura / 100;
-        return this.imc = peso / (alturaMetros * alturaMetros);
+        double alturaMetros = getAltura() / 100;
+        return this.imc = getPeso() / (alturaMetros * alturaMetros);
     }
 
-    public double TaxaMetabolica() {
-        Scanner sc = new Scanner(System.in);
+    public double TaxaMetabolica(AvaliacaoFisica avFisica) {
         double tmb = 0;
-        System.out.println("Quantas vezes você faz exercícios por semana?");
-        double vezesExercicios = sc.nextDouble();
         double fatorAtividade = 0.0;
         Program.limparTela();
 
-        if (vezesExercicios <= 0) {
+        if (getVezesExercicios() <= 0) {
             fatorAtividade = 1.2; // Sedentário (pouco ou nenhum exercício)
-        } else if (vezesExercicios >= 1 && vezesExercicios <= 3) {
+        } else if (getVezesExercicios() >= 1 && getVezesExercicios() <= 3) {
             fatorAtividade = 1.375; // Levemente ativo (exercício leve 1 a 3 dias por semana)
-        } else if (vezesExercicios >= 4 && vezesExercicios <= 6) {
+        } else if (getVezesExercicios() >= 4 && getVezesExercicios() <= 6) {
             fatorAtividade = 1.55; // Moderadamente ativo (exercício moderado 4 a 6 dias por semana)
-        } else if (vezesExercicios >= 7 && vezesExercicios <= 14) {
+        } else if (getVezesExercicios() >= 7 && getVezesExercicios() <= 14) {
             fatorAtividade = 1.725; // Muito ativo (exercício intenso todos os dias ou exercício duas vezes ao dia)
         } else {
             fatorAtividade = 1.9; // Extra ativo (exercício muito difícil, treinamento ou trabalho físico)
         }
         if (pessoa.getSexo().equalsIgnoreCase("M") || pessoa.getSexo().equalsIgnoreCase("Masculino")) {
-            return tmb = fatorAtividade * ((66 + (13.7 * peso) + (5 * altura) - (6.8 * idade)));
+            return tmb = fatorAtividade * ((66 + (13.7 * getPeso()) + (5 * getPeso()) - (6.8 * getIdade())));
         } else if (pessoa.getSexo().equalsIgnoreCase("F") || pessoa.getSexo().equalsIgnoreCase("Feminino")) {
-            return tmb = fatorAtividade * ((655 + (9.6 * peso) + (1.8 * altura) - (4.7 * idade)));
+            return tmb = fatorAtividade * ((655 + (9.6 * getPeso()) + (1.8 * getPeso()) - (4.7 * getIdade())));
         } else {
             System.out.println("Formato do sexo não é válido \n Não foi possível calcular a Taxa metabólica Basal");
         }
@@ -187,7 +194,7 @@ public class AvaliacaoFisica {
         }
         return bf;
     }
-    
+
 //    public String valoresGorduraCorp(){
 //        String condicao;
 //        if(percentualGordura() < 11 && idade > 20 || idade <= 29){
@@ -196,14 +203,13 @@ public class AvaliacaoFisica {
 //        }else if(percentualGordura() > 11 %% percentualGordura() <= 13&& idade > 20 || idade <= 29)
 //        
 //    }
-    
-    public double massaGorda(){
+    public double massaGorda() {
         double massaGorda = 0;
-        return massaGorda = peso * (percentualGordura() / 100);
+        return massaGorda = getPeso() * (percentualGordura() / 100);
     }
-    
-    public double massaMagra(){
+
+    public double massaMagra() {
         double massaMagra = 0;
-        return massaMagra = peso - massaGorda();
+        return massaMagra = getPeso() - massaGorda();
     }
 }
