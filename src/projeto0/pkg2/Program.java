@@ -5,8 +5,11 @@
 package projeto0.pkg2;
 
 import Classes.Alimentos;
+import Classes.AlimentosDAO;
 import Classes.AvaliacaoFisica;
+import Classes.GUI;
 import Classes.Pessoa;
+import Classes.PessoaDAO;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,41 +18,19 @@ import java.util.Scanner;
 public class Program {
 
     public static void main(String[] args) {
+        foraDaMain();
+    }
+
+    private static void foraDaMain() {
         Scanner sc = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
+        PessoaDAO pessoaDAO = new PessoaDAO();
         Pessoa p1 = null;
-        Pessoa arrayPessoas[] = new Pessoa[5];
-        Pessoa p2 = new Pessoa(0, "João", "Masculino", LocalDate.of(1990, 5, 15), "joao", "123", LocalDate.now(), LocalDate.now());
-        arrayPessoas[0] = p2;
-        Pessoa p3 = new Pessoa(1, "Maria", "Feminino", LocalDate.of(1985, 9, 20), "maria", "456", LocalDate.now(), LocalDate.now());
-        arrayPessoas[1] = p3;
-        Pessoa p4 = new Pessoa(4, "Maria", "Feminino", LocalDate.of(1985, 9, 20), "maria", "456", LocalDate.now(), LocalDate.now());
-        arrayPessoas[2] = p4;
-        Pessoa p5 = new Pessoa(2, "Carlos", "Masculino", LocalDate.of(1995, 3, 10), "carlos", "789", LocalDate.now(), LocalDate.now());
-        arrayPessoas[3] = p5;
-//        Pessoa p6 = new Pessoa(3, "Ana", "Feminino", LocalDate.of(1992, 8, 5), "ana", "101", LocalDate.now(), LocalDate.now());
-//        arrayPessoas[4] = p6;
 
+        AlimentosDAO alimDAO = new AlimentosDAO();
         Alimentos alimento = null;
-        Alimentos arrayAlimentos[] = new Alimentos[20];
-        Alimentos alimento1 = new Alimentos(1, "Arroz", 45, 2, 0, 200.5, 100);
-        Alimentos alimento2 = new Alimentos(2, "Frango", 0, 25, 3, 120.0, 100);
-        Alimentos alimento3 = new Alimentos(3, "Brócolis", 5, 3, 0, 30.0, 100);
-        Alimentos alimento4 = new Alimentos(4, "Batata", 20, 2, 0, 90.0, 100);
-        Alimentos alimento5 = new Alimentos(5, "Salmão", 0, 22, 10, 180.0, 100);
-        Alimentos alimento6 = new Alimentos(6, "Espinafre", 2, 3, 0, 23.0, 100);
-        Alimentos alimento7 = new Alimentos(7, "Banana", 30, 1, 0, 105.0, 100);
-        Alimentos alimento8 = new Alimentos(8, "Cenoura", 8, 1, 0, 35.0, 100);
-
-        arrayAlimentos[0] = alimento1;
-        arrayAlimentos[1] = alimento2;
-        arrayAlimentos[2] = alimento3;
-        arrayAlimentos[3] = alimento4;
-        arrayAlimentos[4] = alimento5;
-        arrayAlimentos[5] = alimento6;
-        arrayAlimentos[6] = alimento7;
-        arrayAlimentos[7] = alimento8;
+        
+        GUI gui = new GUI();
 
         AvaliacaoFisica avFisica = null;
 
@@ -57,19 +38,13 @@ public class Program {
 
         do {
             limparTela();
-            System.out.println("Menu:");
-            System.out.println("1. Criar novo usuário");
-            System.out.println("2. Fazer login");
-            System.out.println("3. Sair");
-            System.out.print("Escolha uma opção: ");
-            opc = sc.nextInt();
 
+            opc = gui.menuPrincipal();
             switch (opc) {
                 case 1:
                     limparTela();
                     System.out.println("Novo usuário!");
                     System.out.print("Informe Seu nome: ");
-                    sc.nextLine();
                     String nome = sc.nextLine();
                     System.out.print("Informe o sexo: ");
                     String sexo = sc.nextLine();
@@ -84,9 +59,9 @@ public class Program {
                     String password = sc.nextLine();
                     int id = 0;
                     p1 = new Pessoa(id, nome, sexo, nascimento, login, password, LocalDate.now(), LocalDate.now());
-                    String criarP = p1.criarPessoa(p1, arrayPessoas);
+                    String criarP = pessoaDAO.criarPessoa(p1);
                     System.out.println(criarP);
-                    p1.imprimirArrayPessoas(arrayPessoas);
+                    pessoaDAO.imprimirArrayPessoas(pessoaDAO.getArrayPessoas());
                     break;
                 case 2:
                     limparTela();
@@ -95,7 +70,7 @@ public class Program {
                     boolean loginSucesso = false;
 
                     while (!loginSucesso) {
-                        usuarioLogado = Pessoa.fazerLogin(arrayPessoas);
+                        usuarioLogado = pessoaDAO.fazerLogin();
 
                         if (usuarioLogado != null) {
                             limparTela();
@@ -105,21 +80,12 @@ public class Program {
                             int opcLogado;
                             do {
                                 limparTela();
-                                System.out.println("Menu:");
-                                System.out.println("1. Editar usuário");
-                                System.out.println("2. Excluir usuário");
-                                System.out.println("3. Cadastrar Alimento");
-                                System.out.println("4. Editar Alimentos");
-                                System.out.println("5. Avaliação Física");
-                                System.out.println("6. Voltar ao menu principal");
-                                System.out.print("Escolha uma opção: ");
-                                opcLogado = sc.nextInt();
-
+                                opcLogado = gui.menuUsuarioLogado();
                                 switch (opcLogado) {
                                     case 1:
                                         limparTela();
                                         System.out.println("Opção: Editar usuário");
-                                        Pessoa.modificarPessoa(arrayPessoas, usuarioLogado);
+                                        pessoaDAO.modificarPessoa(usuarioLogado);
                                         limparTela();
                                         //usuarioLogado.imprimirArrayPessoas(arrayPessoas);
                                         System.out.println("Olá, " + usuarioLogado.getNome());
@@ -127,7 +93,7 @@ public class Program {
                                     case 2:
                                         limparTela();
                                         System.out.println("Opção: Excluir usuário");
-                                        String result = Pessoa.removePessoa(arrayPessoas);
+                                        String result = pessoaDAO.removePessoa();
                                         limparTela();
                                         System.out.println(result);
                                         break;
@@ -152,8 +118,8 @@ public class Program {
 
                                         // Criar um objeto Alimento com os valores fornecidos pelo usuário
                                         alimento = new Alimentos(idAlim, nomeAlim, carboidrato, proteina, gordura, calorias, porcao);
-                                        alimento.criarAlimento(alimento, arrayAlimentos);
-                                        alimento.imprimirArrayAlimentos(arrayAlimentos);
+                                        alimDAO.criarAlimento(alimento);
+                                        alimDAO.imprimirArrayAlimentos(alimDAO.getArrayAlimentos());
                                         break;
                                     case 4:
                                         System.out.println("Opção: Editar Alimentos.");
@@ -161,24 +127,24 @@ public class Program {
                                         int opcAlim = 0;
                                         do {
                                             limparTela();
-                                            System.out.println("Menu:");
-                                            System.out.println("1. Editar alimento");
-                                            System.out.println("2. Excluir alimento");
-                                            System.out.println("3. Voltar ao menu anterior");
-                                            System.out.print("Escolha uma opção: ");
-                                            opcAlim = sc.nextInt();
+                                            
+                                            opcAlim = gui.menuAlimentos();
                                             switch (opcAlim) {
                                                 case 1:
-                                                    alimento1.imprimirArrayAlimentos(arrayAlimentos);
+                                                    alimDAO.imprimirArrayAlimentos(alimDAO.getArrayAlimentos());
                                                     System.out.println("Editar alimento");
                                                     limparTela();
-                                                    Alimentos alimEdit = alimento1.editarAlimento(arrayAlimentos);
+                                                    Alimentos alimEdit = alimDAO.editarAlimento(alimDAO.getArrayAlimentos());
                                                     System.out.println(alimEdit);
                                                     break;
                                                 case 2:
                                                     System.out.println("Excluir alimento");
-                                                    result = alimento1.excluirAlimento(arrayAlimentos);
-                                                    System.out.println(result);
+                                                    String resulExc = alimDAO.excluirAlimento(alimDAO.getArrayAlimentos());
+                                                    if (resulExc != null) {
+                                                        System.out.println("Alimento " + resulExc + "  excluído com sucesso!");
+                                                    } else {
+                                                        System.out.println("Não foi possível excluir o alimento!");
+                                                    }
                                                     break;
                                                 case 3:
                                                     opcAlim = 3;
@@ -211,7 +177,6 @@ public class Program {
                                         limparTela();
                                         avFisica = new AvaliacaoFisica(idAf, usuarioLogado, peso, altura, idade, pescoco, cintura, quadril, peso, LocalDate.now(), LocalDate.now());
 
-
                                         System.out.println(avFisica.toString());
                                         break;
                                     case 6:
@@ -235,16 +200,10 @@ public class Program {
                     }
                     break;
                 case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                default:
-                    opc = 6;
+                    opc = 3;
                     break;
             }
-        } while (opc != 6);
+        } while (opc != 3);
     }
 
     public static void limparTela() {
@@ -252,4 +211,5 @@ public class Program {
             System.out.println(); // Imprime linhas em branco para "limpar" o console
         }
     }
+
 }

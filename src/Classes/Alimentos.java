@@ -31,6 +31,10 @@ public class Alimentos {
         this.porcao = porcao;
     }
 
+    public Alimentos(String nome) {
+    }
+    
+
     public int getId() {
         return id;
     }
@@ -69,20 +73,6 @@ public class Alimentos {
 
     public LocalDate getDataModificao() {
         return dataModificao;
-    }
-
-    public String criarAlimento(Alimentos a1, Alimentos[] arrayAlimentos) {
-
-        for (int i = 0; i < arrayAlimentos.length; i++) {
-            if (arrayAlimentos[i] == null) {
-                arrayAlimentos[i] = a1;
-                arrayAlimentos[i].id = i;
-                arrayAlimentos[i].dataCriacao = LocalDate.now();
-                arrayAlimentos[i].dataModificao = LocalDate.now();
-                return "Usuário Criado com sucesso!";
-            }
-        }
-        return "N?o foi possível criar usuário.";
     }
 
     public void setId(int id) {
@@ -125,52 +115,7 @@ public class Alimentos {
         this.dataModificao = dataModificao;
     }
 
-    public Alimentos editarAlimento(Alimentos[] arrAlimentos) {
-        Scanner sc = new Scanner(System.in);
-        Alimentos alimentoEditado = null; // Variável para armazenar o objeto editado
-        boolean encontrado = false;
-
-        System.out.println("Digite o id do alimento que deseja editar");
-        int idAlim = sc.nextInt();
-
-        for (int i = 0; i < arrAlimentos.length; i++) {
-            if (arrAlimentos[i] != null && idAlim == arrAlimentos[i].getId()) {
-                System.out.print("Informe o novo nome do alimento: ");
-                sc.nextLine();
-                String novoNome = sc.nextLine();
-                arrAlimentos[i].setNome(novoNome);
-
-                System.out.print("Informe a quantidade de carboidratos: ");
-                int novoCarboidrato = sc.nextInt();
-                arrAlimentos[i].setCarboidrato(novoCarboidrato);
-
-                System.out.print("Informe a quantidade de proteínas: ");
-                int novoProteina = sc.nextInt();
-                arrAlimentos[i].setProteina(novoProteina);
-
-                System.out.print("Informe a quantidade de gorduras: ");
-                int novoGordura = sc.nextInt();
-                arrAlimentos[i].setGordura(novoGordura);
-
-                System.out.print("Informe as calorias: ");
-                double novoCalorias = sc.nextDouble();
-                arrAlimentos[i].setCalorias(novoCalorias);
-
-                System.out.print("Informe a porção: ");
-                int novoPorcao = sc.nextInt();
-                arrAlimentos[i].setPorcao(novoPorcao);
-
-                Program.limparTela();
-                System.out.println("Alimento editado com sucesso.");
-                alimentoEditado = arrAlimentos[i]; // Atribui o objeto editado à variável
-                encontrado = true;
-            }
-        }
-        if (!encontrado) {
-            System.out.println("ID de alimento não encontrado.");
-        }
-        return alimentoEditado;
-    }
+    
 
 public String excluirAlimento(Alimentos[] arrAlimentos) {
     Scanner sc = new Scanner(System.in);
@@ -200,12 +145,5 @@ public String excluirAlimento(Alimentos[] arrAlimentos) {
                 + '}';
     }
 
-    public void imprimirArrayAlimentos(Alimentos[] arrAlimentos) {
-        System.out.println("\nLista de Alimentos:");
-        for (Alimentos arrAlimento : arrAlimentos) {
-            if (arrAlimento != null) {
-                System.out.println(arrAlimento.toString());
-            }
-        }
-    }
+
 }

@@ -10,15 +10,15 @@ import projeto0.pkg2.Program;
 
 public class Pessoa {
 
-    int id = 0;
-    public String nome;
-    public String sexo;
-    public LocalDate nascimento;
-    public String login;
-    public String senha;
-    public String tipoUsuario;
-    public LocalDate dataCriacao;
-    public LocalDate dataModificacao;
+    private int id = 0;
+    private String nome;
+    private String sexo;
+    private LocalDate nascimento;
+    private String login;
+    private String senha;
+    private String tipoUsuario;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
     //static Pessoa arrayPessoas[] = new Pessoa[5];
 
     public Pessoa(int id, String nome, String sexo, LocalDate nascimento, String login, String senha, LocalDate dataCriacao, LocalDate dataModificacao) {
@@ -39,102 +39,83 @@ public class Pessoa {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getSexo() {
         return sexo;
     }
 
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     public LocalDate getNascimento() {
         return nascimento;
+    }
+
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getTipoUsuario() {
         return tipoUsuario;
     }
 
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     public LocalDate getDataCriacao() {
         return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public String criarPessoa(Pessoa p1, Pessoa[] arrayPessoas) {
-        boolean arrCheio = false;
-        for (int i = 0; i < arrayPessoas.length; i++) {
-            if (arrayPessoas[i] == null) {
-                arrayPessoas[i] = p1;
-                arrayPessoas[i].id = i;
-                arrayPessoas[i].dataCriacao = LocalDate.now();
-                arrayPessoas[i].dataModificacao = LocalDate.now();
-                arrCheio = true;
-                return "Usuário Criado com sucesso!";
-            }
-
-        }
-        if (!arrCheio) {
-            return "Não foi possível criar o usuário, não há espaço disponível";
-
-        }
-        return null;
+    public void setDataModificacao(LocalDate dataModificacao) {
+        this.dataModificacao = dataModificacao;
     }
 
-    public static Pessoa fazerLogin(Pessoa[] arrayPessoas) {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("Informe o usuario: ");
-        String user = sc.nextLine();
-        System.out.print("Senha:");
-        String senha = sc.nextLine();
-        for (Pessoa arrayPessoa : arrayPessoas) {
-            if (arrayPessoa != null && arrayPessoa.getLogin().equalsIgnoreCase(user) && arrayPessoa.getSenha().equalsIgnoreCase(senha)) {
-                return arrayPessoa;
-            }
-        }
-        return null;
-    }
 
-    public static String removePessoa(Pessoa[] arrayPessoas) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o Usuario que deseja excluir: ");
-        String pExcluir = sc.nextLine();
-        for (int i = 0; i < arrayPessoas.length; i++) {
-            if (arrayPessoas[i].login.equalsIgnoreCase(pExcluir)) {
-                String nomeExcluido = arrayPessoas[i].nome;
-                arrayPessoas[i] = null;
-                return "Usuário(a) " + nomeExcluido + " excluido com sucesso!";
-            }
-        }
-        return "Usuario " + pExcluir + " nÃ£o encontrado!";
-    }
 
-    public static void modificarPessoa(Pessoa[] arrayPessoas, Pessoa usuarioLogado) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Alterar nome ");
-        System.out.println("Informe o novo nome: ");
-        String novoNome = sc.nextLine();
 
-        for (Pessoa arrayPessoa : arrayPessoas) {
-            if (arrayPessoa != null && arrayPessoa.getLogin().equals(usuarioLogado.getLogin())) {
-                arrayPessoa.nome = novoNome;
-                Program.limparTela();
-                System.out.println("Nome alterado com sucesso!");
-                break;
-            }
-        }
-    }
+
+
+
+
+
 
     @Override
     public String toString() {
@@ -150,13 +131,6 @@ public class Pessoa {
                 + '}';
     }
 
-    public void imprimirArrayPessoas(Pessoa[] arrayPessoas) {
-        System.out.println("\nLista de Pessoas:");
-        for (Pessoa pessoa : arrayPessoas) {
-            if (pessoa != null) {
-                System.out.println(pessoa.toString());
-            }
-        }
-    }
 
+    
 }
