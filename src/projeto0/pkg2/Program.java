@@ -5,12 +5,12 @@
 package projeto0.pkg2;
 
 import Classes.Alimentos;
-import Classes.AlimentosDAO;
+import DAO.AlimentosDAO;
 import Classes.AvaliacaoFisica;
-import Classes.AvaliacaoFisicaDAO;
-import Classes.GUI;
+import DAO.AvaliacaoFisicaDAO;
+import GUI.GUI;
 import Classes.Pessoa;
-import Classes.PessoaDAO;
+import DAO.PessoaDAO;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -41,7 +41,7 @@ public class Program {
         do {
             limparTela();
 
-            opc = gui.menuPrincipal();
+            opc = gui.menuInicial();
             switch (opc) {
                 case 1:
                     limparTela();

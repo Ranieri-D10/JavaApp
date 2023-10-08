@@ -138,12 +138,12 @@ public class AvaliacaoFisica {
 
     @Override
     public String toString() {
-        return "Kcal/dia" + "Avaliação Física de " + pessoa.getNome() + " {"
+        return "Avaliação Física de " + pessoa.getNome() + " {"
                 + " \n id = " + id + ", peso = " + peso + ", altura = " + altura
                 + ", idade = " + idade + " \n pescoco = " + pescoco
                 + ", cintura = " + cintura + ", quadril = " + quadril
                 + "\n IMC = " + String.format("%.1f", imc())
-                + ", TMB = " + String.format("%.1f",TaxaMetabolica(this))
+                + ", TMB = " + String.format("%.1f",TaxaMetabolica(this))+ "Kcal/dia" 
                 + ", Gordura corporal = " + String.format("%.1f", percentualGordura()) + "%"
                 + "\n Massa gorda = " + String.format("%.1f", massaGorda()) + " kg" + ", Massa massa = " + String.format("%.1f", massaMagra()) + " kg"
                 + "\n dataCriacao = " + dataCriacao

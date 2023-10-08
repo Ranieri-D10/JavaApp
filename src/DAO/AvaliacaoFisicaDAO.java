@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package Classes;
+package DAO;
 
+import Classes.AvaliacaoFisica;
 import java.time.LocalDate;
 
 
