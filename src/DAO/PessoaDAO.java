@@ -96,11 +96,30 @@ public class PessoaDAO {
         }
     }
 
+    public Pessoa encontrarPessoaPorId(int id) {
+        for (Pessoa pessoa : arrayPessoas) {
+            if (pessoa != null && pessoa.getId() == id) {
+                return pessoa;
+            }
+        }
+        return null; 
+    }
+    
+    
     public void imprimirArrayPessoas(Pessoa[] arrayPessoas) {
         System.out.println("\nLista de Pessoas:");
         for (Pessoa pessoa : arrayPessoas) {
             if (pessoa != null) {
                 System.out.println(pessoa.toString());
+            }
+        }
+    }
+    
+        public void imprimirSeguidores(Pessoa[] seguidores) {
+        System.out.println("\nLista de Seguidores:");
+        for (Pessoa pessoa : seguidores) {
+            if (pessoa != null) {
+                System.out.println(pessoa.getNome());
             }
         }
     }

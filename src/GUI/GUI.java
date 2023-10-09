@@ -28,12 +28,12 @@ public class GUI {
         System.out.println("5. Menu de Dieta");
         System.out.println("6. Refeições");
         System.out.println("7. Alimentos/Refeições");
-        System.out.println("8. ");
-        System.out.println("6. Voltar ao menu principal");
+        System.out.println("8. Redes Sociais");
+        System.out.println("9. Voltar ao menu principal");
         System.out.print("Escolha uma opção: ");
         return Integer.parseInt(sc.nextLine());
     }
-    
+
     public int menuPessoas() {
         System.out.println("Menu:");
         System.out.println("1. Editar usuário");
@@ -55,7 +55,7 @@ public class GUI {
         System.out.print("Escolha uma opção: ");
         return Integer.parseInt(sc.nextLine());
     }
-    
+
     public int menuAvaliacaoFisica() {
         System.out.println("Menu:");
         System.out.println("1. Fazer Avaliação Física");
@@ -63,6 +63,34 @@ public class GUI {
         System.out.println("3. Editar Avaliação Física");
         System.out.println("4. Voltar ao menu anterior");
         System.out.print("Escolha uma opção: ");
+        return Integer.parseInt(sc.nextLine());
+    }
+
+    public int menuRedeSociais() {
+        System.out.println("Menu");
+        System.out.println("1. Menu Posts");
+        System.out.println("2. Menu Seguidores");
+        System.out.println("3. Menu mensagens");
+        System.out.println("4. Voltar ao menu anterior");
+        return Integer.parseInt(sc.nextLine());
+    }
+
+    public int menuPost() {
+        System.out.println("Menu");
+        System.out.println("1. Escrever Post");
+        System.out.println("2. Editar Post");
+        System.out.println("3. Excluir Post");
+        System.out.println("4. Exibir Posts");
+        System.out.println("5. Voltar ao menu anterior");
+        return Integer.parseInt(sc.nextLine());
+    }
+
+    public int menuSeguir() {
+        System.out.println("Menu");
+        System.out.println("1. Seguir Alguém");
+        System.out.println("2. Deixar de seguir alguém");
+        System.out.println("3. Exibir Seguidores");
+        System.out.println("4. Voltar ao menu anterior");
         return Integer.parseInt(sc.nextLine());
     }
 }

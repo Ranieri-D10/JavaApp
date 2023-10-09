@@ -10,7 +10,11 @@ import Classes.AvaliacaoFisica;
 import DAO.AvaliacaoFisicaDAO;
 import GUI.GUI;
 import Classes.Pessoa;
+import Classes.Post;
+import Classes.Seguir;
 import DAO.PessoaDAO;
+import DAO.PostDAO;
+import DAO.SeguirDAO;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +39,13 @@ public class Program {
 
         AvaliacaoFisica avFisica = null;
         AvaliacaoFisicaDAO avFisDAO = new AvaliacaoFisicaDAO();
+
+        PostDAO postdao = new PostDAO();
+        Post post1 = null;
+        Post post2 = null;
+
+        SeguirDAO seguirdao = new SeguirDAO();
+        Seguir seguir1 = null;
 
         int opc;
 
@@ -189,7 +200,7 @@ public class Program {
                                                     limparTela();
                                                     avFisica = new AvaliacaoFisica(idAf, usuarioLogado, peso, altura, idade, pescoco, cintura, quadril, vezesExercicios, LocalDate.now(), LocalDate.now());
                                                     boolean booAvFis = avFisDAO.criarAvaliacaoFisica(avFisica);
-                                                    
+
                                                     avFisica.TaxaMetabolica(avFisica);
 
                                                     if (booAvFis) {
@@ -219,6 +230,121 @@ public class Program {
                                         } while (opcAvFis != 4);
                                         break;
                                     case 6:
+                                        System.out.println("Falta implementar");
+                                        break;
+                                    case 7:
+                                        System.out.println("Falta implementar");
+                                        break;
+                                    case 8:
+                                        System.out.println("Redes Sociais");
+                                        System.out.println("Seguidores ---------------------");
+                                        pessoaDAO.imprimirSeguidores(usuarioLogado.getSeguidores());
+                                        int opcRS = 0;
+                                        do {
+                                            opcRS = gui.menuRedeSociais();
+                                            switch (opcRS) {
+                                                case 1:
+                                                    int opcPost = 0;
+                                                    do {
+                                                        opcPost = gui.menuPost();
+                                                        switch (opcPost) {
+                                                            case 1:
+                                                                System.out.println("1. Escrever Post");
+                                                                System.out.println("Digite o conteúdo da post: ");
+                                                                String mensagem = sc.nextLine();
+                                                                post1 = new Post(usuarioLogado, mensagem);
+                                                                post2 = postdao.criarPost(post1);
+                                                                if (post2 != null) {
+                                                                    limparTela();
+                                                                    System.out.println("Post criado com sucesso");
+                                                                    System.out.println(post1.toString());
+                                                                    limparTela();
+                                                                } else {
+                                                                    limparTela();
+                                                                    System.out.println("Não foi possível criar post!");
+                                                                    limparTela();
+                                                                }
+                                                                break;
+                                                            case 2:
+                                                                System.out.println("2. Editar Post");
+                                                                System.out.println("Digite o id do post que deseja editar");
+                                                                int idEdit = Integer.parseInt(sc.nextLine());
+                                                                boolean resulEdit = postdao.editarPost(post1, idEdit);
+                                                                if (resulEdit) {
+                                                                    System.out.println("Post editado com sucesso!");
+                                                                    limparTela();
+                                                                } else {
+                                                                    System.out.println("Não foi possível editar o post.");
+                                                                    limparTela();
+                                                                }
+                                                                break;
+                                                            case 3:
+                                                                System.out.println("3. Excluir Post");
+                                                                System.out.println("Digite o id do post que deseja excluir: ");
+                                                                int idExcluir = Integer.parseInt(sc.nextLine());
+                                                                boolean resulExc = postdao.excluirPost(post1, idExcluir);
+                                                                if (resulExc) {
+                                                                    System.out.println("Post excluído com sucesso");
+                                                                    limparTela();
+                                                                } else {
+                                                                    System.out.println("ID não encontrado, não foi possível excluir");
+                                                                    limparTela();
+                                                                }
+                                                                break;
+                                                            case 4:
+                                                                System.out.println("4. Exibir Posts");
+                                                                postdao.imprimirArrayPost(postdao.getArrayPost(), usuarioLogado);
+                                                                limparTela();
+                                                                break;
+                                                            case 5:
+                                                                opcRS = 5;
+                                                                break;
+                                                        }
+                                                    } while (opcPost != 5);
+                                                    break;
+                                                case 2:
+                                                    int opcSeguir = 0;
+                                                    do {
+                                                        opcSeguir = gui.menuSeguir();
+                                                        switch (opcSeguir) {
+                                                            case 1:
+                                                                System.out.println("1. Seguir Alguém");
+                                                                System.out.println("Informe o id da pessoa que deseja seguir: ");
+                                                                int encId = Integer.parseInt(sc.nextLine());
+                                                                Pessoa pEncontrar = pessoaDAO.encontrarPessoaPorId(encId);
+                                                                if(pEncontrar != null) {
+                                                                Pessoa pSeguindo = seguirdao.seguirPessoa(usuarioLogado,pEncontrar);
+                                                                    System.out.println("Agora você está seguindo " + pEncontrar.getNome());
+                                                                }else{
+                                                                    System.out.println("Não foi possível encontrar pessoa pelo id");
+                                                                }
+                                                                break;
+                                                            case 2:
+                                                                System.out.println("2. Deixar de seguir alguém");
+
+                                                                break;
+                                                            case 3:
+                                                                System.out.println("3. Exibir Seguidores");
+                                                                seguirdao.imprimirArraySeguidores(seguirdao.getSeguir(), usuarioLogado);
+                                                                limparTela();
+                                                                break;
+                                                            case 4:
+                                                                break;
+
+                                                        }
+                                                    } while (opcSeguir != 4);
+                                                    break;
+                                                case 3:
+
+                                                    break;
+                                                case 4:
+
+                                                    break;
+                                            }
+                                        } while (opcRS != 4);
+
+                                        break;
+                                    case 9:
                                         System.out.println("Saindo do programa.");
                                         break;
                                     default:
@@ -226,7 +352,8 @@ public class Program {
                                         System.out.println("Opção inválida. Tente novamente.");
                                         break;
                                 }
-                            } while (opcLogado != 6);
+
+                            } while (opcLogado != 9);
                         } else {
                             System.out.println("Ocorreu um problema ao fazer login.\nVerifique o usuário e senha ou crie uma conta.");
                             System.out.println("Deseja tentar novamente? (S para Sim, qualquer outra tecla para Sair)");
@@ -238,6 +365,7 @@ public class Program {
                         }
                     }
                     break;
+
                 case 3:
                     opc = 3;
                     break;

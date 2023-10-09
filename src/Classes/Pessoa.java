@@ -19,7 +19,7 @@ public class Pessoa {
     private String tipoUsuario;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
-    //static Pessoa arrayPessoas[] = new Pessoa[5];
+    public Pessoa seguidores[] = new Pessoa[15]; // Vetor para armazenar os seguidores
 
     public Pessoa(int id, String nome, String sexo, LocalDate nascimento, String login, String senha, LocalDate dataCriacao, LocalDate dataModificacao) {
         this.id = id;
@@ -33,6 +33,14 @@ public class Pessoa {
     }
 
     public Pessoa() {
+    }
+
+    public Pessoa[] getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(Pessoa[] seguidores) {
+        this.seguidores = seguidores;
     }
 
     public int getId() {
@@ -107,15 +115,14 @@ public class Pessoa {
         this.dataModificacao = dataModificacao;
     }
 
-
-
-
-
-
-
-
-
-
+    public void adicionarSeguidor(Pessoa usuarioLogado) {
+        for (int i = 0; i < seguidores.length; i++) {
+            if (seguidores[i] == null) {
+                seguidores[i] = usuarioLogado;
+                break;
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -131,6 +138,4 @@ public class Pessoa {
                 + '}';
     }
 
-
-    
 }
