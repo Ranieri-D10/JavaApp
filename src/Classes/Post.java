@@ -74,10 +74,12 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post #" + id + "\n"
-                + "    Mensagem: " + mensagem + "\n"
-                + "    Data de Criação: " + dataCriacao + "\n"
-                + "    Data de Modificação: " + dataModificacao;
+        return "    Post #" + id + "\n"
+                + "       De: " + pessoa.getNome() + "\n"
+                + "       Mensagem: " + mensagem + "\n"
+                + "       Data de Criação: " + dataCriacao + "\n"
+                + "       Data de Modificação: " + dataModificacao;
     }
+
 
 }

@@ -5,6 +5,7 @@
 package DAO;
 
 import Classes.Pessoa;
+import Classes.Post;
 import Classes.Seguir;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -38,13 +39,28 @@ public class SeguirDAO {
         return null;
     }
 
+    public Seguir[] getSeguidoresQueUsuarioSegue(Pessoa usuarioLogado) {
+        Seguir[] seguidoresQueUsuarioSegue = new Seguir[arraySeguindo.length];
+        int count = 0;
+
+        for (Seguir seguir : arraySeguindo) {
+            if (seguir != null && seguir.getOrigem() == usuarioLogado) {
+                seguidoresQueUsuarioSegue[count] = seguir;
+                count++;
+            }
+        }
+        return seguidoresQueUsuarioSegue;
+    }
+
     public void imprimirArraySeguidores(Seguir[] arrSeguindo, Pessoa usuarioLogado) {
         System.out.println("\nLista de pessoas que " + usuarioLogado.getNome() + " segue\n");
         for (Seguir seguir : arrSeguindo) {
-            if (seguir != null) {
+            if (seguir != null && seguir.getOrigem() == usuarioLogado) {
                 System.out.println(seguir.toString());
             }
         }
     }
+    
 
+    
 }

@@ -5,6 +5,8 @@
 package Classes;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 import projeto0.pkg2.Program;
 
@@ -19,7 +21,7 @@ public class Pessoa {
     private String tipoUsuario;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
-    public Pessoa seguidores[] = new Pessoa[15]; // Vetor para armazenar os seguidores
+    public Pessoa seguidores[] = new Pessoa[50]; // Vetor para armazenar os seguidores
 
     public Pessoa(int id, String nome, String sexo, LocalDate nascimento, String login, String senha, LocalDate dataCriacao, LocalDate dataModificacao) {
         this.id = id;
@@ -124,6 +126,41 @@ public class Pessoa {
         }
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + this.id;
+        hash = 23 * hash + Objects.hashCode(this.nome);
+        hash = 23 * hash + Objects.hashCode(this.sexo);
+        hash = 23 * hash + Objects.hashCode(this.nascimento);
+        hash = 23 * hash + Objects.hashCode(this.login);
+        hash = 23 * hash + Objects.hashCode(this.senha);
+        hash = 23 * hash + Objects.hashCode(this.tipoUsuario);
+        hash = 23 * hash + Objects.hashCode(this.dataCriacao);
+        hash = 23 * hash + Objects.hashCode(this.dataModificacao);
+        hash = 23 * hash + Arrays.deepHashCode(this.seguidores);
+        return hash;
+    }
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pessoa other = (Pessoa) obj;
+        return this.id == other.id;
+    }
+
+    
+    
     @Override
     public String toString() {
         return "Usuário " + nome + " { "

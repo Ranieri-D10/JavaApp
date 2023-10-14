@@ -66,10 +66,7 @@ public class PessoaDAO {
         return null;
     }
 
-    public String removePessoa() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o Usuário que deseja excluir: ");
-        String pExcluir = sc.nextLine();
+    public String removePessoa(String pExcluir) {
         for (int i = 0; i < arrayPessoas.length; i++) {
             if (arrayPessoas[i] != null && arrayPessoas[i].getLogin().equalsIgnoreCase(pExcluir)) {
                 String nomeExcluido = arrayPessoas[i].getNome();
@@ -80,12 +77,7 @@ public class PessoaDAO {
         return "Usuário " + pExcluir + " não encontrado!";
     }
 
-    public void modificarPessoa(Pessoa usuarioLogado) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Alterar nome ");
-        System.out.println("Informe o novo nome: ");
-        String novoNome = sc.nextLine();
-
+    public void modificarPessoa(Pessoa usuarioLogado, String novoNome) {
         for (Pessoa arrayPessoa : arrayPessoas) {
             if (arrayPessoa != null && arrayPessoa.getLogin().equals(usuarioLogado.getLogin())) {
                 arrayPessoa.setNome(novoNome);
@@ -116,7 +108,6 @@ public class PessoaDAO {
     }
     
         public void imprimirSeguidores(Pessoa[] seguidores) {
-        System.out.println("\nLista de Seguidores:");
         for (Pessoa pessoa : seguidores) {
             if (pessoa != null) {
                 System.out.println(pessoa.getNome());

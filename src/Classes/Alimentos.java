@@ -5,6 +5,7 @@
 package Classes;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Scanner;
 import projeto0.pkg2.Program;
 
@@ -34,7 +35,6 @@ public class Alimentos {
     public Alimentos(String nome) {
     }
     
-
     public int getId() {
         return id;
     }
@@ -115,6 +115,37 @@ public class Alimentos {
         this.dataModificao = dataModificao;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.nome);
+        hash = 29 * hash + this.carboidrato;
+        hash = 29 * hash + this.proteina;
+        hash = 29 * hash + this.gordura;
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.calorias) ^ (Double.doubleToLongBits(this.calorias) >>> 32));
+        hash = 29 * hash + this.porcao;
+        hash = 29 * hash + Objects.hashCode(this.tipoUsuario);
+        hash = 29 * hash + Objects.hashCode(this.dataCriacao);
+        hash = 29 * hash + Objects.hashCode(this.dataModificao);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Alimentos other = (Alimentos) obj;
+        return this.id == other.id;
+    }
+
     
 
 public String excluirAlimento(Alimentos[] arrAlimentos) {
@@ -144,6 +175,4 @@ public String excluirAlimento(Alimentos[] arrAlimentos) {
                 + ", porcao = " + porcao
                 + '}';
     }
-
-
 }
