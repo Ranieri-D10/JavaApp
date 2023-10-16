@@ -146,33 +146,16 @@ public class Alimentos {
         return this.id == other.id;
     }
 
-    
-
-public String excluirAlimento(Alimentos[] arrAlimentos) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Digite o id do alimento que deseja excluir: ");
-    int alimExcluir = sc.nextInt();
-
-    for (int i = 0; i < arrAlimentos.length; i++) {
-        if (arrAlimentos[i] != null && alimExcluir == arrAlimentos[i].getId()) {
-            String alimExcluido = arrAlimentos[i].getNome();
-            arrAlimentos[i] = null;
-            return "Alimento " + alimExcluido + " excluído!";
-        }
-    }
-    return "Alimento " + alimExcluir + " não encontrado!";
-}
-
     @Override
     public String toString() {
-        return "Alimento{"
+        return "Alimento {"
                 + "id = " + id
                 + ", nome = '" + nome + '\''
-                + ", carboidrato = " + carboidrato
-                + ", proteina = " + proteina
-                + ", gordura = " + gordura
-                + ", calorias = " + calorias
-                + ", porcao = " + porcao
+                + ", carboidrato = " + carboidrato + "g"
+                + ", proteina = " + proteina + "g"
+                + ", gordura = " + gordura + "g"
+                + ", calorias = " + calorias + "k/cal"
+                + ", porcao = " + porcao + "g"
                 + '}';
     }
 }

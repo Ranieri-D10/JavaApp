@@ -81,6 +81,7 @@ public class PessoaDAO {
         for (Pessoa arrayPessoa : arrayPessoas) {
             if (arrayPessoa != null && arrayPessoa.getLogin().equals(usuarioLogado.getLogin())) {
                 arrayPessoa.setNome(novoNome);
+                arrayPessoa.setDataModificacao(LocalDate.now());
                 Program.limparTela();
                 System.out.println("Nome alterado com sucesso!");
                 break;

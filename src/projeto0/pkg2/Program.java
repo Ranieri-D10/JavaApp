@@ -5,6 +5,7 @@
 package projeto0.pkg2;
 
 import Classes.Alimentos;
+import Classes.AlimentosRefeicoes;
 import DAO.AlimentosDAO;
 import Classes.AvaliacaoFisica;
 import Classes.Dieta;
@@ -12,12 +13,16 @@ import DAO.AvaliacaoFisicaDAO;
 import GUI.GUI;
 import Classes.Pessoa;
 import Classes.Post;
+import Classes.Refeicoes;
 import Classes.Seguir;
 import Classes.TipoDeDieta;
+import DAO.AlimentosRefeicoesDAO;
 import DAO.DietaDAO;
 import DAO.PessoaDAO;
 import DAO.PostDAO;
+import DAO.RefeicoesDAO;
 import DAO.SeguirDAO;
+import DAO.TipoDeDietaDAO;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -44,12 +49,22 @@ public class Program {
 
     SeguirDAO seguirdao = new SeguirDAO();
     Seguir seguir1 = null;
-    
+
     DietaDAO dietadao = new DietaDAO();
     Dieta dieta1 = null;
 
+    TipoDeDietaDAO tipoDietadao = new TipoDeDietaDAO();
+    TipoDeDieta tipoDieta = null;
+
+    RefeicoesDAO refeicoesDao = new RefeicoesDAO();
+    Refeicoes refeicao = null;
+
+    AlimentosRefeicoesDAO alimRefDao = new AlimentosRefeicoesDAO();
+    AlimentosRefeicoes alimRef = null;
+
     public Program() {
         boolean postTesteInserido = false;
+        boolean postavFisicaTeste = false;
 
         int opc;
 
@@ -79,6 +94,10 @@ public class Program {
                             System.out.println("Login realizado com sucesso");
                             System.out.println("Olá, " + usuarioLogado.getNome());
                             loginSucesso = true; // Define loginSucesso como true para sair do loop
+                            if (!postavFisicaTeste) {
+                                avFisica = avFisDAO.inserirAFTeste(usuarioLogado);
+                                postavFisicaTeste = true;
+                            }
                             int opcLogado;
                             do {
                                 limparTela();
@@ -125,6 +144,13 @@ public class Program {
                                             opcAlim = gui.menuAlimentos();
                                             switch (opcAlim) {
                                                 case 1:
+                                                    //Adicionar Alimentos
+                                                    alimento = gui.createAlimento();
+                                                    alimDAO.criarAlimento(alimento);
+                                                    limparTela();
+                                                    System.out.println("Alimento adicionado.\n" + alimento.toString());
+                                                    break;
+                                                case 2:
                                                     //Editar Alimento
                                                     alimDAO.imprimirArrayAlimentos(alimDAO.getArrayAlimentos());
                                                     limparTela();
@@ -135,7 +161,7 @@ public class Program {
                                                         System.out.println(alimEditado);
                                                     }
                                                     break;
-                                                case 2:
+                                                case 3:
                                                     //Excluir Alimento
                                                     int idRemove = gui.buscaIdAlim(alimDAO.getArrayAlimentos());
                                                     if (idRemove != -1) {
@@ -147,19 +173,19 @@ public class Program {
                                                         }
                                                     }
                                                     break;
-                                                case 3:
+                                                case 4:
                                                     //Exibir lista de alimentos
                                                     alimDAO.imprimirArrayAlimentos(alimDAO.getArrayAlimentos());
                                                     break;
-                                                case 4:
-                                                    opcAlim = 4;
+                                                case 5:
+                                                    opcAlim = 5;
                                                     break;
                                                 default:
                                                     limparTela();
                                                     System.out.println("Opção inválida. Tente novamente.");
                                                     break;
                                             }
-                                        } while (opcAlim != 4);
+                                        } while (opcAlim != 5);
                                         break;
                                     case 3:
                                         //Avaliação Física
@@ -210,7 +236,12 @@ public class Program {
                                                     }
                                                     break;
                                                 case 4:
-                                                    opcAvFis = 4;
+                                                    avFisDAO.imprimirAvaliacoesFisicas();
+                                                    postdao.imprimirArrayPost(postdao.getArrayPost());
+
+                                                    break;
+                                                case 5:
+                                                    opcAvFis = 5;
                                                     break;
                                                 default:
                                                     limparTela();
@@ -218,24 +249,66 @@ public class Program {
                                                     limparTela();
                                                     break;
                                             }
-                                        } while (opcAvFis != 4);
+                                        } while (opcAvFis != 5);
                                         break;
                                     case 4:
-                                        System.out.println("Falta implementar");
+                                        // Tipo de Dieta
+                                        int opcTipoDieta = 0;
+                                        do {
+                                            limparTela();
+                                            opcTipoDieta = gui.menuTipoDieta();
+                                            switch (opcTipoDieta) {
+                                                case 1:
+                                                    // Criar tipo de Dieta
+                                                    limparTela();
+                                                    // Variável que armazena o tipo de Dieta
+                                                    int tdieta = gui.escolherTipoDeDieta();
+                                                    tipoDieta = tipoDietadao.criarTipoDeDieta(tdieta);
+                                                    limparTela();
+                                                    System.out.println(tipoDieta.toString());
+                                                    break;
+                                                case 2:
+                                                    // Editar tipo de Dieta
+                                                    int tDietaEdit = gui.escolherTipoDeDieta();
+                                                    int idTipoDieta = gui.buscarIdTipoDieta();
+                                                    tipoDieta = tipoDietadao.editarTipoDieta(tDietaEdit, idTipoDieta);
+                                                    limparTela();
+                                                    if (tipoDieta != null) {
+                                                        System.out.println(tipoDieta.toString());
+                                                    } else {
+                                                        System.out.println("Tipo de Dieta não encontrado ou não pode ser editado.");
+                                                    }
+                                                    break;
+
+                                                case 3:
+                                                    // Excluir tipo de Dieta
+                                                    int idTipoDietaRemove = gui.buscarIdTipoDieta();
+                                                    tipoDietadao.removerTipoDieta(idTipoDietaRemove);
+                                                    break;
+                                                case 4:
+                                                    // Exibir lista dos tipos de Dieta
+                                                    tipoDietadao.imprimirArrayTipodedieta(tipoDietadao.getArrayTipodeDieta());
+                                                    break;
+                                                case 5:
+                                                    opcTipoDieta = 5;
+                                                    break;
+                                            }
+                                        } while (opcTipoDieta != 5);
                                         break;
                                     case 5: {
                                         //Dieta
-                                        int opcDieta = gui.menuDieta();
-                                        
+                                        int opcDieta = 0;
                                         do {
+                                            limparTela();
+                                            opcDieta = gui.menuDieta();
                                             switch (opcDieta) {
                                                 case 1:
                                                     //Criar Dieta
-                                                    
-                                                    //Falta o código da classe TipoDeDieta
-                                                    TipoDeDieta tipoDieta = null;
+                                                    limparTela();
                                                     dieta1 = gui.criarDieta(avFisica, usuarioLogado, tipoDieta);
                                                     dietadao.inserirDieta(dieta1);
+                                                    limparTela();
+                                                    dietadao.imprimirDietas(dietadao.getArrayDieta());
                                                     break;
                                                 case 2:
                                                     //Editar Dieta
@@ -249,16 +322,81 @@ public class Program {
                                                     opcDieta = 4;
                                                     break;
                                             }
-                                        } while (opc != 4);
+                                        } while (opcDieta != 4);
 
                                     }
                                     break;
-
                                     case 6:
-                                        System.out.println("Falta implementar");
+                                        //Refeições
+                                        int opcRefeicoes = 0;
+
+                                        do {
+                                            limparTela();
+                                            opcRefeicoes = gui.menuRefeicoes();
+                                            switch (opcRefeicoes) {
+                                                case 1:
+                                                    //Inserir Refeições
+                                                    String nomeRefeicao = gui.nomeRefeicao();
+                                                    refeicoesDao.inserirRefeicao(nomeRefeicao, dieta1, tipoDieta);
+                                                    limparTela();
+                                                    refeicoesDao.imprimirRefeicoes(refeicoesDao.getArrayRefeicao());
+                                                    limparTela();
+                                                    break;
+                                                case 2:
+                                                    //Editar Refeição
+                                                    String nomeRefeicaoEdit = gui.nomeRefeicao();
+                                                    int idRefeicaoEdit = gui.idRefeicao();
+                                                    refeicoesDao.editarRefeicao(nomeRefeicaoEdit, idRefeicaoEdit);
+                                                    break;
+                                                case 3:
+                                                    //Excluir Refeição
+                                                    int idRemove = gui.idRefeicao();
+                                                    String retornRemove = refeicoesDao.removerRefeicao(idRemove);
+                                                    limparTela();
+                                                    System.out.println(retornRemove);
+                                                    break;
+                                                case 4:
+                                                    //Exibir Refeições
+                                                    limparTela();
+                                                    refeicoesDao.imprimirRefeicoes(refeicoesDao.getArrayRefeicao());
+                                                    limparTela();
+                                                    break;
+                                                case 5:
+
+                                                    break;
+
+                                            }
+                                        } while (opcRefeicoes != 5);
+
                                         break;
                                     case 7:
-                                        System.out.println("Falta implementar");
+                                        //Alimentos/Refeições
+                                        int opcAlimRef = 0;
+                                        do {
+                                            limparTela();
+                                            opcAlimRef = gui.menuAlimentosRefeicoes();
+                                            switch (opcAlimRef) {
+                                                case 1:
+                                                    //Adicionar Alimentos a refeicao
+                                                    int idRef = gui.buscaIdRefeicao();
+                                                    alimRefDao.inserirAlimentosNaRefeicao(refeicoesDao.getArrayRefeicao(), alimDAO, idRef, alimRefDao.getArrayAlimRef());
+                                                    limparTela();
+                                                    alimRefDao.imprimirAlimentosRefeicoes(alimRefDao.getArrayAlimRef());
+                                                    break;
+                                                case 2:
+                                                    //Editar alimentos da refeicao
+
+                                                    break;
+                                                case 3:
+                                                    //Remover alimentos da refeicao
+                                                    break;
+                                                case 4:
+                                                    //Exibir alimentos da refeicao
+                                                    break;
+                                                default:
+                                                    throw new AssertionError();
+                                            }
+                                        } while (opcAlimRef != 4);
                                         break;
                                     case 8:
                                         limparTela();
@@ -409,11 +547,12 @@ public class Program {
                     break;
             }
         } while (opc != 3);
+
     }
 
     public static void limparTela() {
         for (int i = 0; i < 2; i++) {
-            System.out.println(); // Imprime linhas em branco para "limpar" o console
+            System.out.println();
         }
     }
 

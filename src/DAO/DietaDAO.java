@@ -19,6 +19,10 @@ public class DietaDAO {
         return arrayDieta;
     }
 
+    public Dieta[] getArrayDieta() {
+        return arrayDieta;
+    }
+
     public void inserirDieta(Dieta dieta) {
         for (int i = 0; i < arrayDieta.length; i++) {
             if (arrayDieta[i] == null) {
@@ -26,6 +30,7 @@ public class DietaDAO {
                 arrayDieta[i].setId(i);
                 arrayDieta[i].setDataCriacao(LocalDate.now());
                 arrayDieta[i].setDataModificacao(LocalDate.now());
+                break;
             }
         }
     }
@@ -35,10 +40,21 @@ public class DietaDAO {
         System.out.println("Informe o número de refeições");
         int nroRefeicoes = Integer.parseInt(sc.nextLine());
         dieta.setNroRefeicoes(nroRefeicoes);
+        dieta.setDataModificacao(LocalDate.now());
         return dieta;
     }
 
     public void excluirDieta(Dieta dieta1) {
         dieta1 = null;
     }
+
+    public void imprimirDietas(Dieta[] arrDietas) {
+        System.out.println("Lista de Dietas");
+        for (Dieta dieta : arrDietas) {
+            if (dieta != null) {
+                System.out.println(dieta.toString());
+            }
+        }
+    }
+
 }

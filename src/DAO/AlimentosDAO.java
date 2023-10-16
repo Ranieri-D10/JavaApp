@@ -55,7 +55,6 @@ public class AlimentosDAO {
     }
 
     public Alimentos editarAlimento(Alimentos[] arrAlimentos, Alimentos alimEditando, int idAlim) {
-
         arrAlimentos[idAlim] = alimEditando;
         arrAlimentos[idAlim].setDataCriacao(LocalDate.now());
         arrAlimentos[idAlim].setDataModificao(LocalDate.now());

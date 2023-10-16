@@ -142,8 +142,6 @@ public class Pessoa {
         return hash;
     }
 
-
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -159,20 +157,17 @@ public class Pessoa {
         return this.id == other.id;
     }
 
-    
-    
     @Override
     public String toString() {
-        return "Usuário " + nome + " { "
-                + " \n  id = " + id
-                + ", sexo = '" + sexo + '\''
-                + ", nascimento = " + nascimento + "\n"
-                + "  tipoUsuario = '" + tipoUsuario
-                + ", login = '" + login + '\''
-                + ", senha = '" + senha + '\''
-                + "\n  dataCriacao = " + dataCriacao
-                + ", dataModificacao = " + dataModificacao
+        return "Usuário " + nome + " { \n"
+                + "\tid = " + id + ",\n"
+                + "\tsexo = '" + sexo + "',\n"
+                + "\tnascimento = " + nascimento + "\n"
+                + "\ttipoUsuario = '" + tipoUsuario + "',\n"
+                + "\tlogin = '" + login + "',\n"
+                + "\tsenha = '" + senha + "',\n"
+                + "\tdataCriacao = " + dataCriacao + ",\n"
+                + "\tdataModificacao = " + dataModificacao + "\n"
                 + '}';
     }
-
 }

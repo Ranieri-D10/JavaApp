@@ -5,6 +5,7 @@
 package DAO;
 
 import Classes.AvaliacaoFisica;
+import Classes.Pessoa;
 import java.time.LocalDate;
 
 public class AvaliacaoFisicaDAO {
@@ -16,6 +17,13 @@ public class AvaliacaoFisicaDAO {
 
     public AvaliacaoFisica[] getArrayAvFisica() {
         return arrayAvFisica;
+    }
+
+    public AvaliacaoFisica inserirAFTeste(Pessoa usuarioLogado) {
+
+        AvaliacaoFisica avF1 = new AvaliacaoFisica(0, usuarioLogado, 80, 170, 33, 28, 80, 80, 4, LocalDate.now(), LocalDate.now());
+        criarAvaliacaoFisica(avF1);
+        return avF1;
     }
 
     public boolean criarAvaliacaoFisica(AvaliacaoFisica avFisica) {
@@ -43,10 +51,18 @@ public class AvaliacaoFisicaDAO {
 
     public AvaliacaoFisica editarAvaliacaoFisica(AvaliacaoFisica[] arrAvFisica, int idRem, double peso) {
         arrAvFisica[idRem].setPeso(peso);
-        arrAvFisica[idRem].setDataCriacao(LocalDate.now());
         arrAvFisica[idRem].setdataModificacao(LocalDate.now());
 
         return arrAvFisica[idRem];
+    }
+
+    public void imprimirAvaliacoesFisicas() {
+        System.out.println("Lista de Avaliações Físicas:");
+        for (AvaliacaoFisica avFisica : arrayAvFisica) {
+            if (avFisica != null) {
+                System.out.println(avFisica.toString());
+            }
+        }
     }
 
 }

@@ -63,6 +63,7 @@ public class PostDAO {
                 System.out.println("Digite o novo conteúdo do post");
                 String msgEdit = sc.nextLine();
                 arrayPost[i].setMensagem(msgEdit);
+                arrayPost[i].setDataModificacao(LocalDate.now());
                 return true;
             }
         }

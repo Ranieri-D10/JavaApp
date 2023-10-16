@@ -55,10 +55,11 @@ public class GUI {
 
     public int menuAlimentos() {
         System.out.println("Menu Alimentos:");
-        System.out.println("1. Editar alimento");
-        System.out.println("2. Excluir alimento");
-        System.out.println("3. Exibir lista de alimentos");
-        System.out.println("4. Voltar ao menu anterior");
+        System.out.println("1. Adicionar alimento");
+        System.out.println("2. Editar alimento");
+        System.out.println("3. Excluir alimento");
+        System.out.println("4. Exibir lista de alimentos");
+        System.out.println("5. Voltar ao menu anterior");
         System.out.print("Escolha uma opção: ");
         return Integer.parseInt(sc.nextLine());
     }
@@ -68,7 +69,8 @@ public class GUI {
         System.out.println("1. Fazer Avaliação Física");
         System.out.println("2. Excluir Avaliação Física");
         System.out.println("3. Editar Avaliação Física");
-        System.out.println("4. Voltar ao menu anterior");
+        System.out.println("4. Exibir Avaliação Física");
+        System.out.println("5. Voltar ao menu anterior");
         System.out.print("Escolha uma opção: ");
         return Integer.parseInt(sc.nextLine());
     }
@@ -106,8 +108,42 @@ public class GUI {
         System.out.println("1. Criar dieta. ");
         System.out.println("2. Editar dieta. ");
         System.out.println("3. Remover dieta. ");
+        System.out.println("4. Voltar ao menu anterior");
         int opcDieta = Integer.parseInt(sc.nextLine());
         return opcDieta;
+    }
+
+    public int menuRefeicoes() {
+        System.out.println("Menu Refeições");
+        System.out.println("1. Adicionar refeição. ");
+        System.out.println("2. Editar refeição. ");
+        System.out.println("3. Remover refeição. ");
+        System.out.println("4. Exibir refeiçcões. ");
+        System.out.println("5. Voltar ao menu anterior");
+        int opcRefeicoes = Integer.parseInt(sc.nextLine());
+        return opcRefeicoes;
+    }
+
+    public int menuTipoDieta() {
+        System.out.println("Menu Tipo de Dieta");
+        System.out.println("1. Escolher tipo de Dieta.");
+        System.out.println("2. Editar tipo de Dieta.");
+        System.out.println("3. Remover escolha da dieta.");
+        System.out.println("4. Exibir tipos de dieta do usuário.");
+        System.out.println("5. Voltar ao menu anterior.");
+        int opcTipoDieta = Integer.parseInt(sc.nextLine());
+        return opcTipoDieta;
+    }
+
+    public int menuAlimentosRefeicoes() {
+        System.out.println("Menu Alimentos da Refeição");
+        System.out.println("1. Adicionar alimento à refeição");
+        System.out.println("2. Editar alimentos da refeição");
+        System.out.println("3. Excluir alimentos da refeição");
+        System.out.println("4. Exibir refeição");
+        System.out.println("5. Voltar ao menu anterior");
+        int opcAlimentosRefeicoes = Integer.parseInt(sc.nextLine());
+        return opcAlimentosRefeicoes;
     }
 
     //CRUD Pessoa
@@ -238,6 +274,22 @@ public class GUI {
         return -1;
     }
 
+    //CRUD TIPO DE DIETA
+    public int escolherTipoDeDieta() {
+        System.out.println("Escolha um tipo de dieta: ");
+        System.out.println("1. Dieta Equilibrada.");
+        System.out.println("2. Dieta Low Carb.");
+        System.out.println("3. Dieta Cetogênica.");
+        int tdieta = Integer.parseInt(sc.nextLine());
+        return tdieta;
+    }
+
+    public int buscarIdTipoDieta() {
+        System.out.println("Informe o id do tipo de dieta: ");
+        int id = Integer.parseInt(sc.nextLine());
+        return id;
+    }
+
     //CRUD DIETA
     public Dieta criarDieta(AvaliacaoFisica avFisica, Pessoa usuarioLogado, TipoDeDieta tipoDieta) {
         System.out.println("Qual o seu objetivo? : ");
@@ -246,24 +298,49 @@ public class GUI {
         System.out.println("3. Melhorar composição corporal.");
         System.out.println("4. Aumentar o peso.");
         int obj = Integer.parseInt(sc.nextLine());
+        String objetivo = "Indefinido";
         double caloriasDieta = 0;
         switch (obj) {
             case 1:
                 caloriasDieta = avFisica.TaxaMetabolica(avFisica) - 500;
+                objetivo = "Diminuir o peso";
                 break;
             case 2:
                 caloriasDieta = avFisica.TaxaMetabolica(avFisica);
+                objetivo = "Manter o peso";
                 break;
             case 3:
                 caloriasDieta = avFisica.TaxaMetabolica(avFisica) + 200;
+                objetivo = "Melhorar composição corporal";
                 break;
             case 4:
                 caloriasDieta = avFisica.TaxaMetabolica(avFisica) + 500;
+                objetivo = "Aumentar o peso";
         }
         System.out.println("Informe o número de refeições: ");
         int nroRefeicoes = Integer.parseInt(sc.nextLine());
-        Dieta dieta = new Dieta(usuarioLogado, avFisica, tipoDieta, obj, nroRefeicoes);
+        Dieta dieta = new Dieta(usuarioLogado, avFisica, tipoDieta, objetivo, caloriasDieta, nroRefeicoes);
         return dieta;
+    }
+
+    //CRUD REFEIÇÕES
+    public String nomeRefeicao() {
+        System.out.println("Informe o nome da refeição: ");
+        String nomeRef = sc.nextLine();
+        return nomeRef;
+    }
+
+    public int idRefeicao() {
+        System.out.println("Informe o id da refeição: ");
+        int idRef = Integer.parseInt(sc.nextLine());
+        return idRef;
+    }
+
+    //CRUD ALIMENTOS/REFEICOES
+    public int buscaIdRefeicao() {
+        System.out.println("Informe o id da refeição: ");
+        int id = Integer.parseInt(sc.nextLine());
+        return id;
     }
 
     //CRUD POST

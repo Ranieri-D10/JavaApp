@@ -40,6 +40,8 @@ public class AvaliacaoFisica {
         this.dataCriacao = dataCriacao;
         this.dataModificacao = dataModificacao;
     }
+    
+    
 
     public int getId() {
         return id;
