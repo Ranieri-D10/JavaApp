@@ -83,11 +83,9 @@ public class PostDAO {
         Seguir[] seguidores = seguirDAO.getSeguidoresQueUsuarioSegue(usuarioLogado);
 
         for (Seguir seguir : seguidores) {
-            if (seguir != null) { // Verifica se o objeto Seguir não é nulo
+            if (seguir != null) { 
                 Pessoa pessoaSeguida = seguir.getSeguindo();
-                if (pessoaSeguida != null) { // Verifica se o objeto Pessoa não é nulo
-                   //System.out.println("Posts de " + pessoaSeguida.getNome() + ":\n");
-
+                if (pessoaSeguida != null) { 
                     for (Post post : arrayPost) {
                         if (post != null && post.getPessoa() == pessoaSeguida) {
                             System.out.println(post.toString());
