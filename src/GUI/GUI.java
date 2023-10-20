@@ -10,6 +10,7 @@ import Classes.Dieta;
 import Classes.Pessoa;
 import Classes.Seguir;
 import Classes.TipoDeDieta;
+import DAO.SeguirDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -144,6 +145,17 @@ public class GUI {
         System.out.println("5. Voltar ao menu anterior");
         int opcAlimentosRefeicoes = Integer.parseInt(sc.nextLine());
         return opcAlimentosRefeicoes;
+    }
+    
+    public int MenuMensagens() {
+        System.out.println("Menu Mensagens");
+        System.out.println("1. Enviar mensagem");
+        System.out.println("2. Editar mensagem");
+        System.out.println("3. Excluir mensagem");
+        System.out.println("4. Exibir lista de mensagens");
+        System.out.println("5. Voltar ao menu anterior");
+        int opcMensagens = Integer.parseInt(sc.nextLine());
+        return opcMensagens;
     }
 
     //CRUD Pessoa
@@ -363,5 +375,17 @@ public class GUI {
         int encId = Integer.parseInt(sc.nextLine());
         return encId;
     }
-
+    
+    //CRUD Mensagem
+    public int buscarSeguidores(SeguirDAO seguidores, Pessoa usuarioLogado){
+        System.out.println("Informe o id da pessoa que deseja enviar mensagem: ");
+        int idSeguidor = Integer.parseInt(sc.nextLine());
+        return idSeguidor;
+    }
+    
+    public int buscarIdMensagem(){
+        System.out.println("Informe o id da mensagem: ");
+        int idMsgEdit = Integer.parseInt(sc.nextLine());
+        return idMsgEdit;
+    }
 }

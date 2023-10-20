@@ -9,6 +9,7 @@ import Classes.AlimentosRefeicoes;
 import DAO.AlimentosDAO;
 import Classes.AvaliacaoFisica;
 import Classes.Dieta;
+import Classes.Mensagens;
 import DAO.AvaliacaoFisicaDAO;
 import GUI.GUI;
 import Classes.Pessoa;
@@ -18,6 +19,7 @@ import Classes.Seguir;
 import Classes.TipoDeDieta;
 import DAO.AlimentosRefeicoesDAO;
 import DAO.DietaDAO;
+import DAO.MensagemDAO;
 import DAO.PessoaDAO;
 import DAO.PostDAO;
 import DAO.RefeicoesDAO;
@@ -61,6 +63,9 @@ public class Program {
 
     AlimentosRefeicoesDAO alimRefDao = new AlimentosRefeicoesDAO();
     AlimentosRefeicoes alimRef = null;
+
+    MensagemDAO mensagemDao = new MensagemDAO();
+    Mensagens mensagem1 = null;
 
     public Program() {
         boolean postTesteInserido = false;
@@ -515,7 +520,41 @@ public class Program {
                                                     } while (opcSeguir != 4);
                                                     break;
                                                 case 3:
-
+                                                    //Mensagens
+                                                    int opcMsg = 0;
+                                                    do {
+                                                        opcMsg = gui.MenuMensagens();
+                                                        switch (opcMsg) {
+                                                            case 1:
+                                                                //Enviar mensagem
+                                                                seguirdao.imprimirArraySeguidores(seguirdao.getSeguir(), usuarioLogado);
+                                                                limparTela();
+                                                                int idSeguidor = gui.buscarSeguidores(seguirdao, usuarioLogado);
+                                                                mensagem1 = mensagemDao.enviarMensagem(idSeguidor, usuarioLogado, pessoaDAO.getArrayPessoas());
+                                                                System.out.println(mensagem1.toString());
+                                                                limparTela();
+                                                                break;
+                                                            case 2:
+                                                                //Editar mensagem
+                                                                System.out.println("2. Editar mensagem");
+                                                                int idMsg = gui.buscarIdMensagem();
+                                                                mensagemDao.editarMensagem(idMsg);
+                                                                break;
+                                                            case 3:
+                                                                //Excluir mensagem
+                                                                System.out.println("3. Excluir mensagem");
+                                                                idMsg = gui.buscarIdMensagem();
+                                                                mensagemDao.excluirMensagem(idMsg);
+                                                                break;
+                                                            case 4:
+                                                                //Exibir mensagem
+                                                                mensagemDao.imprimirArrayMensagens(mensagemDao.getArrayMensagem());
+                                                                break;
+                                                            case 5:
+                                                                opcMsg = 5;
+                                                                break;
+                                                        }
+                                                    } while (opcMsg != 5);
                                                     break;
                                                 case 4:
 

@@ -69,7 +69,7 @@ public class Seguir {
     @Override
     public String toString() {
         return " #" + id +
-               " Seguindo: " + seguindo.getNome();
+               " Seguindo: " + seguindo.getNome() + ", id:" + seguindo.getId();
     }
 }
 
