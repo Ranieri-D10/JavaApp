@@ -109,7 +109,8 @@ public class GUI {
         System.out.println("1. Criar dieta. ");
         System.out.println("2. Editar dieta. ");
         System.out.println("3. Remover dieta. ");
-        System.out.println("4. Voltar ao menu anterior");
+        System.out.println("4. Exibir lista de dietas. ");
+        System.out.println("5. Voltar ao menu anterior");
         int opcDieta = Integer.parseInt(sc.nextLine());
         return opcDieta;
     }
@@ -333,6 +334,12 @@ public class GUI {
         int nroRefeicoes = Integer.parseInt(sc.nextLine());
         Dieta dieta = new Dieta(usuarioLogado, avFisica, tipoDieta, objetivo, caloriasDieta, nroRefeicoes);
         return dieta;
+    }
+    
+    public int buscarIdDieta(){
+        System.out.println("Informe o id da dieta: ");
+        int idEdit = Integer.parseInt(sc.nextLine());
+        return idEdit;
     }
 
     //CRUD REFEIÇÕES

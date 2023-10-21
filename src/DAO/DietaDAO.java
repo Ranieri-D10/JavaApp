@@ -35,17 +35,26 @@ public class DietaDAO {
         }
     }
 
-    public Dieta EditarDieta(Dieta dieta) {
+    public Dieta EditarDieta(int idEdit) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Informe o número de refeições");
         int nroRefeicoes = Integer.parseInt(sc.nextLine());
-        dieta.setNroRefeicoes(nroRefeicoes);
-        dieta.setDataModificacao(LocalDate.now());
-        return dieta;
+        for (int i = 0; i < arrayDieta.length; i++) {
+            if (arrayDieta[i] != null && arrayDieta[i].getId() == idEdit) {
+                arrayDieta[i].setNroRefeicoes(nroRefeicoes);
+                arrayDieta[i].setDataModificacao(LocalDate.now());
+                return arrayDieta[i];
+            }
+        }
+        return null;
     }
 
-    public void excluirDieta(Dieta dieta1) {
-        dieta1 = null;
+    public void excluirDieta(int idRemove) {
+        for (int i = 0; i < arrayDieta.length; i++) {
+            if (arrayDieta[i] != null && arrayDieta[i].getId() == idRemove) {
+                arrayDieta[i] = null;
+            }
+        }
     }
 
     public void imprimirDietas(Dieta[] arrDietas) {

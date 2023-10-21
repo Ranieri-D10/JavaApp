@@ -268,15 +268,17 @@ public class Program {
                                                     limparTela();
                                                     // Variável que armazena o tipo de Dieta
                                                     int tdieta = gui.escolherTipoDeDieta();
-                                                    tipoDieta = tipoDietadao.criarTipoDeDieta(tdieta);
+                                                    tipoDieta = tipoDietadao.selecionarTipoDeDieta(tdieta);
+                                                    tipoDieta = tipoDietadao.inserirTipoDeDieta(tipoDieta);
                                                     limparTela();
                                                     System.out.println(tipoDieta.toString());
                                                     break;
                                                 case 2:
                                                     // Editar tipo de Dieta
-                                                    int tDietaEdit = gui.escolherTipoDeDieta();
                                                     int idTipoDieta = gui.buscarIdTipoDieta();
-                                                    tipoDieta = tipoDietadao.editarTipoDieta(tDietaEdit, idTipoDieta);
+                                                    int tDietaEdit = gui.escolherTipoDeDieta();
+                                                    tipoDieta = tipoDietadao.selecionarTipoDeDieta(tDietaEdit);
+                                                    tipoDieta = tipoDietadao.editarTipoDieta(tDietaEdit, idTipoDieta, tipoDieta);
                                                     limparTela();
                                                     if (tipoDieta != null) {
                                                         System.out.println(tipoDieta.toString());
@@ -317,14 +319,21 @@ public class Program {
                                                     break;
                                                 case 2:
                                                     //Editar Dieta
-                                                    dieta1 = dietadao.EditarDieta(dieta1);
+                                                    int idEdit = gui.buscarIdDieta();
+                                                    dieta1 = dietadao.EditarDieta(idEdit);
+                                                    System.out.println(dieta1.toString());
                                                     break;
                                                 case 3:
                                                     //Excluir Dieta
-                                                    dietadao.excluirDieta(dieta1);
+                                                    int idRemove = gui.buscarIdDieta();
+                                                    dietadao.excluirDieta(idRemove);
                                                     break;
                                                 case 4:
-                                                    opcDieta = 4;
+                                                    //Exibir Lista de Dietas
+                                                    dietadao.imprimirDietas(dietadao.getArrayDieta());
+                                                    break;
+                                                case 5: 
+                                                    opcDieta = 5;
                                                     break;
                                             }
                                         } while (opcDieta != 4);

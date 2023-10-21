@@ -23,10 +23,11 @@ public class TipoDeDietaDAO {
         this.arrayTipodeDieta = arrayTipodedieta;
     }
 
-    public TipoDeDieta criarTipoDeDieta(int tdieta) {
+    public TipoDeDieta selecionarTipoDeDieta(int tdieta) {
         double carb = 0, protein = 0, gordura = 0;
         String nomeDieta = "";
         TipoDeDieta tipoDieta = null;
+
         switch (tdieta) {
             case 1:
                 nomeDieta = "Equilibrada";
@@ -47,27 +48,32 @@ public class TipoDeDietaDAO {
                 gordura = 0.2;
                 break;
         }
+
+        tipoDieta = new TipoDeDieta();
+        tipoDieta.setNome(nomeDieta);
+        tipoDieta.setCarboidrato(carb);
+        tipoDieta.setProteina(protein);
+        tipoDieta.setGordura(gordura);
+
+        return tipoDieta;
+    }
+
+    public TipoDeDieta inserirTipoDeDieta(TipoDeDieta tipoDieta) {
         for (int i = 0; i < arrayTipodeDieta.length; i++) {
             if (arrayTipodeDieta[i] == null) {
-                tipoDieta = new TipoDeDieta();
                 tipoDieta.setId(i);
-                tipoDieta.setNome(nomeDieta);
-                tipoDieta.setCarboidrato(carb);
-                tipoDieta.setProteina(protein);
-                tipoDieta.setGordura(gordura);
                 tipoDieta.setDataCriacao(LocalDate.now());
                 tipoDieta.setDataModificao(LocalDate.now());
                 arrayTipodeDieta[i] = tipoDieta;
                 return tipoDieta;
             }
         }
-        return tipoDieta;
+        return null; // Se o array estiver cheio, retorne null ou outra indicação de erro.
     }
 
-    public TipoDeDieta editarTipoDieta(int tdieta, int idTipoDieta) {
+    public TipoDeDieta editarTipoDieta(int tdieta, int idTipoDieta, TipoDeDieta tipoDieta) {
         for (int i = 0; i < arrayTipodeDieta.length; i++) {
             if (arrayTipodeDieta[i] != null && arrayTipodeDieta[i].getId() == idTipoDieta) {
-                TipoDeDieta tipoDieta = criarTipoDeDieta(tdieta);
                 arrayTipodeDieta[i].setNome(tipoDieta.getNome());
                 arrayTipodeDieta[i].setCarboidrato(tipoDieta.getCarboidrato());
                 arrayTipodeDieta[i].setProteina(tipoDieta.getProteina());
@@ -96,5 +102,4 @@ public class TipoDeDietaDAO {
             }
         }
     }
-
 }
